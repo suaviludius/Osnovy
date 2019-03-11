@@ -1,0 +1,81 @@
+#include <stdio.h> 
+// определение символических констант
+#define YES 1 
+#define NO 0
+#define MAXLINE 1000
+void process_line(char buffer[]);
+int main(void)
+{
+	char line[MAXLINE];
+	gets_s(line);
+	process_line(line);
+	puts(line);
+	return 0;
+}
+void process_line(char buffer[])
+{
+	char c; // текущий символ
+	int flag; // признак слова
+	int i; // позиция текущего символа исходной 
+		   // cтроки
+
+	int pos; // позиция текущего символа 
+			 // результирующей строки
+	int start; // позиция начала слова
+	int j, cnt,t;
+	// начальные присваивания (инициализация)
+	flag = NO;
+	start = 0;
+	cnt = 0;
+	t = 1;
+	i = 0;
+	pos = 0;
+	// цикл чтения символов из строки
+	do
+	{
+		c = buffer[i]; // взять текущий символ из 
+					   // буфера
+		if (c == ' ' || c == '.' || c == ',' || c == '\n' || c == '\0')
+		{
+			// найден разделитель
+			if (flag == YES)
+			{
+				// это первый разделить после слова
+				// проверить, обнаружен ли в слове 
+				// искомый признак
+
+				for (j = start; j <(i-(i-start+1)/2); j++)
+				{
+				
+					if (buffer[j] == buffer[i - t])
+						cnt++;
+					t++;
+				}
+
+				if (cnt != ( (i - start) / 2) || cnt==0)
+
+				{
+					// слово не подлежит удалению
+					// оно копируется в результирующую 
+					// строку
+					for (j = start; j < i; j++)
+						buffer[pos++] = buffer[j];
+				}
+			}
+			flag = NO;
+			buffer[pos++] = c;
+		}
+		else
+		{
+			// найдена буква
+			if (flag == NO)
+				start = i; // запомнить позицию 
+						   // начала слова
+			flag = YES;
+			cnt = 0;
+			t = 1;
+		}
+		i++;
+
+	} while (c != '\0');
+}
