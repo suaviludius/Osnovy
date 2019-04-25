@@ -12,7 +12,7 @@ int main()
 	
 	setlocale(LC_ALL, "Rus");
 	printf("Введите чиселко х: "); //ввод числа в 16 ричной форме
-	scanf_s("%x\n", &x);
+	scanf_s("%x", &x);
 	res_x = (unsigned int)x;
 	
 
