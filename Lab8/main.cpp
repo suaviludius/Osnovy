@@ -21,14 +21,10 @@ void process_line(char buffer[])
 	int cnt = 0; //счетчик для определения полиндрома
 	int t = 1; // счетчик для приближения середины слова
 
-	char *j = buffer; // позиция начала слова
-	char *in_ptr; // (i) - позиция текущего символа
-	char *out_ptr; // (pos) - позиция символа выхода
-	char *word_ptr; // (start) - позиция начала слова
-
-	in_ptr = buffer; // текущий символ входа
-	out_ptr = buffer; // текущий символ выхода ...
-	word_ptr = buffer; //начало слова ...
+	char *j = buffer; // позиция начала слова для изменения
+	char *in_ptr = buffer; // (i) - позиция текущего символа
+	char *out_ptr = buffer; // (pos) - позиция символа выхода
+	char *word_ptr = buffer; // (start) - позиция начала слова
 
 	
 	// цикл чтения символов из строки
@@ -61,24 +57,32 @@ void process_line(char buffer[])
 					t++; //число приближающее к середине слова
 				}
 				
-				if (cnt != ((in_ptr - word_ptr) / 2) || cnt == 0)
+				if (cnt != ((in_ptr - word_ptr) / 2) || (cnt == 0 && found == YES))
 				{
 					// слово не подлежит удалению
 					// оно копируется в результирующую 
 					// строку
 
 					for (j = word_ptr; j < in_ptr; j++)
-						*out_ptr++ = *word_ptr++;
+					{
+						*out_ptr++ = *j;
+					}
 
 				}
 
 
 			}
-			flag = NO;
+
+			//if (cnt != ((in_ptr - word_ptr) / 2) || (cnt == 0 && found == YES))
+			//{
+               
+			//	*out_ptr++ = c; //пробелы для "не пaлиндромов"
+			//}
+			//else  
+				*out_ptr++ = c;
+
 			found = NO;
-			if (cnt != ((in_ptr - word_ptr) / 2) || cnt == 0)
-				*out_ptr++ = c; //пробелы для "не пaлиндромов"
-			else *out_ptr = c;
+			flag = NO;
 
 		}
 		else
