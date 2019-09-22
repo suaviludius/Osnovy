@@ -1,23 +1,21 @@
 #include <stdio.h> 
+#include <locale.h>
 // определение символических констант
 #define YES 1 
 #define NO 0
 #define MAXLINE 1000
-void process_line(char buffer[]);
+
 int main(void)
 {
-	char line[MAXLINE];
-	gets_s(line);
-	process_line(line);
-	puts(line);
-	return 0;
-}
+	setlocale(LC_ALL,"Russian");
+	printf(" _   _   _  _ _ _ _  _  _   _  _  _\n"); printf("| | /-\\ / \\ |/| |-| /| |-\' | | |\\/|\n\n");
 
-void process_line(char buffer[])
-{
+	char buffer[MAXLINE];
+	gets_s(buffer);
+
 	char c; // текущий символ
 	int flag = NO; // признак слова
-	int found = NO; // определение слова
+	int found = NO; // определение слова (NO значит слово)
 	int cnt = 0; //счетчик для определения полиндрома
 	int t = 1; // счетчик для приближения середины слова
 
@@ -32,24 +30,22 @@ void process_line(char buffer[])
 	{
 		c = *in_ptr; // взять текущий символ из буфера
  
-		if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != ' ' && c != '.' && c != ',' && c != '\n' && c != '\0' && c != '\t')) // проверка на не слово
+		if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != ' ' && c != '.' && c != ',' && c != '\n' && c != '\0' && c != '\t' && c != ')' && c != '(' && c != ':' && c != ';' && c != '!' && c != '?')) // проверка на не слово
 		{
 			found = YES;
 		}
 
-		if (c == ' ' || c == '.' || c == ',' || c == '\n' || c == '\0')
+		if (c == ' ' || c == '.' || c == ',' || c == '\n' || c == '\0' || c == '\t' || c == ')' || c == '(' || c == ':' || c == ';' || c == '!' || c == '?') // найден разделитель
 		{
-			// найден разделитель
-			if (flag == YES)
+			if (flag == YES) // это первый разделить после слова
 			{
-				// это первый разделить после слова
 				// проверить, обнаружен ли в слове 
 				// искомый признак
 
 				for (j = word_ptr; j <(in_ptr - (in_ptr - word_ptr + 1) / 2);j++)
 				{
-					int c1 = *j;
-					int c2 = *(in_ptr-t);
+					int c1 = *j; //начало слова
+					int c2 = *(in_ptr-t); //середина слова
 
 					if ((c1 - 'A' == c2 - 'A' || c1 - 'a' == c2 - 'a' || c1 - 'a' == c2 - 'A' || c1 - 'A' == c2 - 'a') && (found != YES))  // проверка на условие
 						cnt++;
@@ -59,13 +55,11 @@ void process_line(char buffer[])
 				
 				if (cnt != ((in_ptr - word_ptr) / 2) || (cnt == 0 && found == YES))
 				{
-					// слово не подлежит удалению
-					// оно копируется в результирующую 
-					// строку
+					// слово не подлежит удалению, оно копируется в результирующую строку
 
 					for (j = word_ptr; j < in_ptr; j++)
 					{
-						*out_ptr++ = *j;
+						*out_ptr++ = *j; 
 					}
 
 				}
@@ -74,8 +68,7 @@ void process_line(char buffer[])
 			}
 
 			//if (cnt != ((in_ptr - word_ptr) / 2) || (cnt == 0 && found == YES))
-			//{
-               
+			//{  
 			//	*out_ptr++ = c; //пробелы для "не пaлиндромов"
 			//}
 			//else  
@@ -97,4 +90,7 @@ void process_line(char buffer[])
 		in_ptr++; //переход к следующей ячейке буфера
 
 	} while (c != '\0');
+
+	puts(buffer);
+	return 0;
 }
