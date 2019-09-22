@@ -88,7 +88,9 @@ int main(void)
 		in_ptr++; //переход к следующей ячейке буфера
 
 	} while (c != '\0');
-
+	
+	*out_ptr++ = *in_ptr;
+	
 	puts(buffer);
 	return 0;
 }
