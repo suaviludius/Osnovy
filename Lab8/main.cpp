@@ -1,5 +1,4 @@
 #include <stdio.h> 
-#include <locale.h>
 // определение символических констант
 #define YES 1 
 #define NO 0
@@ -7,7 +6,6 @@
 
 int main(void)
 {
-	setlocale(LC_ALL,"Russian");
 	printf(" _   _   _  _ _ _ _  _  _   _  _  _\n"); printf("| | /-\\ / \\ |/| |-| /| |-\' | | |\\/|\n\n");
 
 	char buffer[MAXLINE];
